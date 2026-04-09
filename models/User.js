@@ -47,12 +47,16 @@ const userSchema = new mongoose.Schema(
       maxlength: [200, 'College name cannot exceed 200 characters'],
     },
 
-    course: {
+    currentAcademicProgram: {
       type: String,
       required: [true, 'Course is required'],
       trim: true,
       minlength: [2, 'Course must be at least 2 characters'],
       maxlength: [150, 'Course cannot exceed 150 characters'],
+    },
+    registeredForProgram: {
+      type: String,
+      required: true
     },
 
     // Optional: Add more fields as needed for production

@@ -5,7 +5,8 @@ const User = require('../models/User');   // Adjust path if your model is elsewh
 
 // Import Controller (we'll create this next if you want)
 const {
-  registerUser
+  registerUser,
+  getAllUsers,
 } = require('../controllers/User.controller.js');
 
 // ====================== ROUTES ======================
@@ -13,8 +14,10 @@ const {
 // POST - Register a new user
 router.post('/register', registerUser);
 
+
+
 // GET - Get all users (for admin/dashboard - use with caution in production)
-//router.get('/', getAllUsers);
+router.get('/', getAllUsers);
 
 // GET - Get single user by ID
 //router.get('/:id', getUserById);

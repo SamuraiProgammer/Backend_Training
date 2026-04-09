@@ -16,6 +16,7 @@ app.use(cors({
     origin: [
         'http://localhost:3000',      // React default
         'http://localhost:5174',      // Vite default
+        'http://localhost:5173',
         'http://127.0.0.1:3000',
         'http://127.0.0.1:5173',
         'https://frontend-training-kappa.vercel.app'
@@ -30,12 +31,13 @@ app.use(cors({
 // Middleware
 app.use(express.json());
 
-app.get("/", (req,res) => {
-  res.send("api is running...")
-})
-
 // Routes
+app.get("/",(req,res) => {
+  res.send("Server is Running...")
+})
 app.use('/api/auth', require('./routes/user.route.js'));
+app.use('/api/admin', require('./routes/admin.route.js'));
+app.use('/api/course-detail', require('./routes/course.route.js'))
 
 const PORT = process.env.PORT || 5000;
 
