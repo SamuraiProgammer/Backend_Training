@@ -2,7 +2,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require("cors")
-const { connectDB } = require('./db/index.js');   // Adjust path if needed
+const { connectDB, closeDB } = require('./db/index.js');   // Adjust path if needed
 //const UserRouter = require("./routes/user.route.js")
 // Load environment variables
 dotenv.config();
@@ -19,7 +19,8 @@ app.use(cors({
         'http://localhost:5173',
         'http://127.0.0.1:3000',
         'http://127.0.0.1:5173',
-        'https://frontend-training-kappa.vercel.app'
+        'https://frontend-training-kappa.vercel.app',
+        'https://admin-training-sigma.vercel.app/'
         // Add your production frontend URL here later, e.g.:
         // 'https://your-frontend-domain.com'
     ],
@@ -38,6 +39,7 @@ app.get("/",(req,res) => {
 app.use('/api/auth', require('./routes/user.route.js'));
 app.use('/api/admin', require('./routes/admin.route.js'));
 app.use('/api/course-detail', require('./routes/course.route.js'))
+app.use('/api/offers', require('./routes/offer.route.js'))
 
 const PORT = process.env.PORT || 5000;
 
