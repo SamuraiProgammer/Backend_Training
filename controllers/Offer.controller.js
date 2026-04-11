@@ -7,6 +7,7 @@ const PreviewRegistration = require("../models/PreviewRegistration");
 const CourseCard = require("../models/CourseCard");
 const Course = require("../models/Course");
 const User = require("../models/User");
+const { sendTemplatedEmail } = require("../SES/ses");
 
 const OFFER_ALLOWED_FIELDS = [
   "slug",
@@ -786,6 +787,39 @@ const verifyOfferPayment = async (req, res) => {
     registration.razorpaySignature = razorpaySignature;
     registration.paymentCapturedAt = new Date();
     await registration.save();
+
+    const formatDate = (value) => {
+  if (!value) return "-";
+  return new Date(value).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
+  const templateData = {
+    name: registration.applicant.name,
+    email: registration.applicantemail,
+    amount: registration.amount,
+    registrationCode: registration.registrationCode,
+    batchStartAt: formatDate(registration.batchStartAt),
+    batchEndAt: formatDate(registration.batchEndAt),
+  };
+
+  try {
+          await sendTemplatedEmail(["info@thewholepoint.org","info@ensolab.in"], "BecomingTrainingPaymentSuccessAdmin", templateData);
+        } catch (e) {
+          console.warn("Email send failed", e?.response?.data || e?.message);
+        }
+        try {
+        await sendTemplatedEmail(
+          [registration.applicant.email],                    // Send to the user
+          "BecomingTrainingPaymentSuccessUser",             // Use a different template name
+          templateData
+        );
+      } catch (e) {
+        console.warn("Welcome email send failed", e?.response?.data || e?.message);
+      }
 
     return res.status(200).json({
       success: true,
