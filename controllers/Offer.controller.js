@@ -10,6 +10,11 @@ const User = require("../models/User");
 const { sendTemplatedEmail } = require("../SES/ses");
 
 const OFFER_ALLOWED_FIELDS = [
+  "_id",
+  "createdAt",
+  "updatedAt",
+  "__v",
+  "registrationsCount",
   "slug",
   "badge",
   "cardTitle",
