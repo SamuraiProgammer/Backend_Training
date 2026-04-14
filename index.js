@@ -20,7 +20,7 @@ app.use(cors({
         'http://localhost:5173',
         'http://127.0.0.1:3000',
         'http://127.0.0.1:5173',
-        'https://frontend-training-kappa.vercel.app',
+        'https://becoming-training.vercel.app',
         'https://admin-training-sigma.vercel.app'
         // Add your production frontend URL here later, e.g.:
         // 'https://your-frontend-domain.com'
