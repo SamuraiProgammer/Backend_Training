@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require("cors")
 const { connectDB, closeDB } = require('./db/index.js');   // Adjust path if needed
+import cron from "node-cron";
 //const UserRouter = require("./routes/user.route.js")
 // Load environment variables
 dotenv.config();
@@ -32,10 +33,24 @@ app.use(cors({
 // Middleware
 app.use(express.json());
 
+cron.schedule("*/5 * * * *", async () => {
+  console.log("Running cron job");
+
+  try {
+    await fetch("https://backend-training-ssoq.onrender.com/api/cron");
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 // Routes
 app.get("/",(req,res) => {
   res.send("Server is Running...")
 })
+app.get("/api/cron", (req, res) => {
+  console.log("Ping received at:", new Date());
+  res.send("OK");
+});
 app.use('/api/auth', require('./routes/user.route.js'));
 app.use('/api/admin', require('./routes/admin.route.js'));
 app.use('/api/course-detail', require('./routes/course.route.js'))
