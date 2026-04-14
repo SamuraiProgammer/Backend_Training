@@ -3,7 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require("cors")
 const { connectDB, closeDB } = require('./db/index.js');   // Adjust path if needed
-import cron from "node-cron";
+const cron = require("node-cron")
 //const UserRouter = require("./routes/user.route.js")
 // Load environment variables
 dotenv.config();
