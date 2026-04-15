@@ -807,7 +807,7 @@ const verifyOfferPayment = async (req, res) => {
 
   const templateData = {
     name: registration.applicant.name,
-    email: registration.applicantemail,
+    email: registration.applicant.email,
     amount: registration.amount,
     registrationCode: registration.registrationCode,
     batchStartAt: formatDate(registration.batchStartAt),
